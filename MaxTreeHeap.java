@@ -5,7 +5,6 @@ public class MaxTreeHeap {
     private Vertex root;
     private int size;
 
-
     public MaxTreeHeap(int[] A){
         this.size = A.length;
     }
