@@ -47,27 +47,6 @@ public class MedianDS {
         return p+q;
     }
 
-
-    public int selectHelper (int[] A){
-        int n = A.length;
-        if (n == 1) {
-            return A[0];
-        }
-        boolean haveResidual = false;
-        int residual = 0;
-        int numGroups;
-        if (n % 5 == 0) {
-            numGroups = n / 5;
-        } else {
-            numGroups = (n / 5) + 1;
-            haveResidual = true;
-            residual = n % 5;
-        }
-        int[] mediansForGroups = new int[numGroups];
-        findMedianForEachGroup(numGroups, haveResidual, residual, A, mediansForGroups); //find median for each group
-        return selectHelper(mediansForGroups);
-    }
-
     public int select(int[] A, int i) {
         int x = selectHelper(A);
         int n = A.length;
@@ -90,6 +69,27 @@ public class MedianDS {
             return select(ACopy, i-q-1);
         }
     }
+    
+    public int selectHelper (int[] A){
+        int n = A.length;
+        if (n == 1) {
+            return A[0];
+        }
+        boolean haveResidual = false;
+        int residual = 0;
+        int numGroups;
+        if (n % 5 == 0) {
+            numGroups = n / 5;
+        } else {
+            numGroups = (n / 5) + 1;
+            haveResidual = true;
+            residual = n % 5;
+        }
+        int[] mediansForGroups = new int[numGroups];
+        findMedianForEachGroup(numGroups, haveResidual, residual, A, mediansForGroups); //find median for each group
+        return selectHelper(mediansForGroups);
+    }
+    
 
     public void findMedianForEachGroup(int munGroups, boolean haveResidual, int residual, int[] A, int[] mediansForGroups){
         int n = A.length;
@@ -115,6 +115,11 @@ public class MedianDS {
                 mediansForGroups[j] = naiveSelect(tempArr,2);
             }
         }
+    }
+    
+        public int naiveSelect(int[] A, int i){
+        mergeSort(A,0,A.length-1);
+        return A[i];
     }
 
     public void merge(int arr[], int l, int m, int r)
@@ -160,11 +165,6 @@ public class MedianDS {
             mergeSort(arr, m + 1, r);
             merge(arr, l, m, r);
         }
-    }
-
-    public int naiveSelect(int[] A, int i){
-        mergeSort(A,0,A.length-1);
-        return A[i];
     }
 
 
